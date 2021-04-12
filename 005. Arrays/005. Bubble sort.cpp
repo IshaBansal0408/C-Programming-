@@ -18,7 +18,7 @@ void Bubble_sort(int arr[200],int l){
 }
 
 int main(){
-    int arr[200],n,arr1[200];
+    int arr[200],n;
     cin>>n;
     for(int i=0;i<n;i++)
         cin>>arr[i];
