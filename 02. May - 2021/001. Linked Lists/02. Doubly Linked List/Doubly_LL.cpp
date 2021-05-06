@@ -116,6 +116,70 @@ public:
         }
         cout<<endl;
     }
+
+    // Deleting from end
+    void delete_end(){
+        if(header==NULL){
+            return;
+        }
+        else if(header->next==NULL){
+            Node* temp = header;
+            header = NULL;
+            delete temp;
+        }
+        else{
+            Node* temp = tail;
+            tail = temp -> prv;
+            temp -> prv -> next = NULL;
+            temp -> prv = NULL;
+            delete temp;
+
+        }
+        size_of_DLL-=1;
+    }
+
+    // Delete from start
+    void delete_start(){
+        if(header==NULL){
+            return;
+        }
+        else{
+            Node* temp = header;
+            temp -> next ->prv = NULL;
+            header = temp -> next;
+            temp -> next = NULL;
+            delete temp;
+        }
+        size_of_DLL-=1;
+    }
+
+    // Delete from kth
+    void delete_kth(int k){
+        if(k<1 || k>size_of_DLL){
+            return;
+        }
+        else if(k==1){
+            delete_start();
+        }
+        else if(k==size_of_DLL){
+            delete_end();
+        }
+        else{
+            Node* temp = header;
+            int i = 1;
+            while(i+1!=k){
+                temp = temp -> next;
+            }
+            temp -> next = temp -> next -> next;
+            temp -> next -> next -> prv = temp;
+            temp -> next -> next = NULL;
+            temp -> next ->prv = NULL;
+            delete temp->next;
+        }
+        size_of_DLL-=1;
+
+    }
+
 };
 
 int main(){
@@ -138,25 +202,36 @@ int main(){
     DLL.print_DLL();
     cout<<"Printing the list in reverse..."<<endl;
     DLL.print_DLL_rev();
-
     cout<<"Inserting at nth place...."<<endl;
-    int n;
-
-    cin>>n;
-    DLL.insert_at_k(200,n);
-    cout<<"The size of list is: "<<DLL.get_size()<<endl;
-    cout<<"Printing the list..."<<endl;
-    DLL.print_DLL();
-
-    cin>>n;
+    int n; cin>>n;
     DLL.insert_at_k(20,n);
     cout<<"The size of list is: "<<DLL.get_size()<<endl;
     cout<<"Printing the list..."<<endl;
     DLL.print_DLL();
+    cout<<"Printing the list in reverse..."<<endl;
+    DLL.print_DLL_rev();
 
-    cin>>n;
-    DLL.insert_at_k(0,n);
+    cout<<"Deleting from end..."<<endl;
+    DLL.delete_end();
     cout<<"The size of list is: "<<DLL.get_size()<<endl;
     cout<<"Printing the list..."<<endl;
     DLL.print_DLL();
+    cout<<"Printing the list in reverse..."<<endl;
+    DLL.print_DLL_rev();
+    cout<<"Deleting from start..."<<endl;
+    DLL.delete_start();
+    cout<<"The size of list is: "<<DLL.get_size()<<endl;
+    cout<<"Printing the list..."<<endl;
+    DLL.print_DLL();
+    cout<<"Printing the list in reverse..."<<endl;
+    DLL.print_DLL_rev();
+    cout<<"Deleting from kth..."<<endl;
+    int k;cin>>k;
+    DLL.delete_kth(k);
+    cout<<"The size of list is: "<<DLL.get_size()<<endl;
+    cout<<"Printing the list..."<<endl;
+    DLL.print_DLL();
+    cout<<"Printing the list in reverse..."<<endl;
+    DLL.print_DLL_rev();
+
 }
