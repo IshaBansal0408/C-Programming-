@@ -49,6 +49,29 @@ class Linked_List{
             }
             size_of_LL+=1;
         }
+                void add_kth(int data,int k){
+            if(k<1){
+                return;
+            }
+            else if(k==1){
+                add_start(data);
+            }
+            else if(k==size_of_LL+1){
+                add_end(data);
+            }
+            else{
+                Node* new_node = new Node(data);
+                Node* temp = header;
+                int i=1;
+                while(i+1!=k){
+                    temp = temp -> next;
+                    i+=1;
+                }
+                new_node -> next = temp -> next;
+                temp -> next = new_node;
+                size_of_LL+=1;
+            }
+        }
         void display_LL(){
             Node* temp = header;
             while(temp != NULL){
@@ -88,33 +111,73 @@ class Linked_List{
             }
             // 3. More than one Node
             else{
-                Node* prev;
-                Node* curr = header;
-                while(curr != NULL){
-                    prev = curr;
-                    curr = curr -> next;
+                Node* temp = header;
+                while(temp -> next -> next != NULL){
+                    temp = temp -> next;
                 }
-                tail = prev;
-                prev -> next = NULL;
-                delete curr;
+
+                delete temp->next;
+                temp -> next = NULL;
                 //decrement the size
                 size_of_LL-=1;
             }
+        }
+
+        // DELETE FROM kth POSITION
+        void delete_kth(int k){
+            // Invalid position
+            if(k<1 || k>size_of_LL){
+                return;
+            }
+            // First node
+            else if(k==1){
+                delete_start();
+            }
+            // Last Node
+            else if(k==size_of_LL){
+                delete_end();
+            }
+            // kth Node
+            else{
+                Node* temp = header;
+                Node* prev;
+                int i = 1;
+                while(temp!=NULL){
+                    if(i==k){
+                        prev -> next = temp -> next;
+                        delete temp;
+                        size_of_LL-=1;
+                        return;
+                    }
+                    prev = temp;
+                    temp = temp -> next;
+                    i+=1;
+                }
+            }
+
         }
 };
 
 int main(){
     Linked_List LL;
+    LL.add_start(1);
+    LL.add_end(2);
     LL.add_start(3);
-    LL.add_end(23);
-    LL.add_start(10);
-    LL.add_end(34);
-    LL.add_start(56);
+    LL.add_start(4);
+    LL.add_end(5);
+    LL.add_start(6);
     cout<<"The size of the linked list is: "<<LL.get_size()<<endl;
     cout<<"My Linked List is: ";
     LL.display_LL();
 
     cout<<"Delete first node!"<<endl; LL.delete_start();
+    cout<<"The size of the linked list is: "<<LL.get_size()<<endl;
+    cout<<"My new Linked List is: ";
+    LL.display_LL();
+
+    cout<<"Delete kth node!"<<endl;
+    int k;cin>>k;
+    LL.delete_kth(k);
     cout<<"The size of the linked list is: "<<LL.get_size()<<endl;
     cout<<"My new Linked List is: ";
     LL.display_LL();

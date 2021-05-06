@@ -78,6 +78,30 @@ class Linked_List{
             }
             cout<<endl;
         }
+        // Adding Node at a certain position
+        void add_kth(int data,int k){
+            if(k<1){
+                return;
+            }
+            else if(k==1){
+                add_start(data);
+            }
+            else if(k==size_of_LL+1){
+                add_end(data);
+            }
+            else{
+                Node* new_node = new Node(data);
+                Node* temp = header;
+                int i=1;
+                while(i+1!=k){
+                    temp = temp -> next;
+                    i+=1;
+                }
+                new_node -> next = temp -> next;
+                temp -> next = new_node;
+                size_of_LL+=1;
+            }
+        }
 };
 
 int main(){
@@ -91,5 +115,13 @@ int main(){
     cout<<endl;
     cout<<"My Linked List is: ";
     LL.display_LL();
+
+    cout<<"Insert at kth"; int k; cin>>k;
+    LL.add_kth(300,k);
+    cout<<"The size of my Linked list is : "<<LL.get_size();
+    cout<<endl;
+    cout<<"My Linked List is: ";
+    LL.display_LL();
+
     return 0;
 }
